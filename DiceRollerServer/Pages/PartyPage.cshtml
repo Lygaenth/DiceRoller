@@ -1,0 +1,67 @@
+﻿@page "/party/{partyId}/{UserId}"
+
+<div class="container">
+    <div class="row"/>
+    <div class="row">
+        <div class="card-header">
+            <label>Name:</label>
+            <label>@ViewData["PartyName"]</label>
+            <label>Code:</label>
+            <label>@ViewData["PartyId"]</label>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <div class="card-header">
+                <label>Users</label>
+            </div>
+            <ul id="usersList"></ul>
+        </div>
+        <div class="col" onload="javascript:JoinSession()">
+            <div class="card-header">
+                <label id="userName" >@ViewData["UserName"]</label>
+            </div>
+            <div class="row p-1">
+                <div class="col p-1">
+                    <a>Message</a>
+                    <input type="text" class="w-200" id="messageInput" />
+                    <input type="button" id="sendButton" value="Send" />
+                </div>
+            </div>
+            <div class="row p-1">
+                <div class="col-1">
+                    <input type="image" id="rollDie4" value="D4" src="./../../Media/D4.png" Width="40" />
+                </div>
+                <div class="col-1">
+                    <input type="image" id="rollDie6" value="D6" src="./../../Media/D6.png" Width="40" />
+                </div>
+                <div class="col-1">
+                    <input type="image" id="rollDie8" value="D8" src="./../../Media/D8.png" Width="40" />
+                </div>
+                <div class="col-1">
+                    <input type="image" id="rollDie10" value="D10" src="./../../Media/D10.png" Width="40" />
+                </div>
+                <div class="col-1">
+                    <input type="image" id="rollDie12" value="D12" src="./../../Media/D12.png" Width="40" />
+                </div>
+                <div class="col-1">
+                    <input type="image" id="rollDie20" value="D20" src="./../../Media/D20.png" Width="40" />
+                </div>
+            </div>
+            <div class="row p-1">
+                <div class="col-6">
+                    <hr />
+                </div>
+            </div>
+            <div class="row p-1">
+                <div class="col-6" Width="400">
+                    <textarea class="scrollabletextbox" id="messagesList" cols="100" rows="10" disabled wrap="soft"></textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/js/signalr/dist/browser/signalr.js"></script>
+<script src="~/js/roll.js"></script>
+
+@model DiceRollerServer.Pages.PartyPageModel

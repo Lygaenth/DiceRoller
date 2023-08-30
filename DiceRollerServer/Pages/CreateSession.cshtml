@@ -1,0 +1,23 @@
+﻿@page "/CreateSession"
+
+<div class="row p-1">
+    <div class="col-1">Party</div>
+    <div class="col-1">
+        <input type="text" id="partyNameInput" />
+    </div>
+</div>
+<div class="row p-1">
+
+    <div class="col-1">Password</div>
+    <div class="col-1">
+        <input type="text" id="partyPasswordInput" />
+    </div>
+</div>
+<div class="row p-1">
+    <div class="col-1">
+        <input type="button" id="CreateSessionButton" value="Connect" />
+    </div>
+</div>
+
+<script src="~/js/signalr/dist/browser/signalr.js"></script>
+<script src="~/js/sessionCreation.js"></script>

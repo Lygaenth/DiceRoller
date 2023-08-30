@@ -1,0 +1,6 @@
+bin
+.vs
+*.csproj.user
+*/bin/*
+*/obj/*
+TestJeux/sortie/*

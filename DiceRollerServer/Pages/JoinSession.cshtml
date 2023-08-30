@@ -1,0 +1,29 @@
+﻿@page "/JoinSession"
+
+<div class="row p-1" id="connectionDiv">
+    <div class="col-1">User</div>
+    <div class="col-1">
+        <input type="text" id="userNameInput" />
+    </div>
+</div>
+<div class="row p-1">
+    <div class="col-1">Party ID</div>
+    <div class="col-1">
+        <input type="text" id="partyIdInput" />
+    </div>
+</div>
+<div class="row p-1">
+    <div class="col-1">Party password</div>
+    <div class="col-1">
+        <input type="text" id="partyPasswordInput" />
+    </div>
+</div>
+<div class="row p-1">
+    <div class="col-1">
+        <input type="button" id="connectPlayerButton" value="Connect" />
+    </div>
+</div>
+
+<script src="~/js/signalr/dist/browser/signalr.js"></script>
+<script src="~/js/sessionJoining.js"></script>
+

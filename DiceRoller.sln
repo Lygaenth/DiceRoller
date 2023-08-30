@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.33414.496
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DiceRoller", "DiceRoller\DiceRoller.csproj", "{6C66BCB0-1C47-4D40-83CC-8A77BC7DCEE2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DiceRollerServer", "DiceRollerServer\DiceRollerServer.csproj", "{3FB77D77-CBAD-41FF-94B7-D77EADA49537}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6C66BCB0-1C47-4D40-83CC-8A77BC7DCEE2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6C66BCB0-1C47-4D40-83CC-8A77BC7DCEE2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6C66BCB0-1C47-4D40-83CC-8A77BC7DCEE2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6C66BCB0-1C47-4D40-83CC-8A77BC7DCEE2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3FB77D77-CBAD-41FF-94B7-D77EADA49537}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3FB77D77-CBAD-41FF-94B7-D77EADA49537}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3FB77D77-CBAD-41FF-94B7-D77EADA49537}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3FB77D77-CBAD-41FF-94B7-D77EADA49537}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F2C06D03-AF98-415B-89CA-5F01DCC71D92}
+	EndGlobalSection
+EndGlobal
