@@ -1,4 +1,4 @@
-# TestJeuxPublic
+# Dice roller
 Public version
 This is a test project for an online pen and paper rpg platform where players and GM can communicate in real time.
 
