@@ -1,23 +1,38 @@
 ﻿@page "/CreateSession"
-
-<div class="row p-1">
-    <div class="col-1">Party</div>
-    <div class="col-1">
-        <input type="text" id="partyNameInput" />
+<div>
+    <div style="float:left; width:30%">
+        <p></p>
+    </div>
+    <div style="float:left; width:40%;background:ghostwhite; height:500px; padding-top:100px;">
+        <div style="display: flex; justify-content: center; align-items: center;">
+            <div style="width:200px; height:40px">
+                <div style="float:left; width:30%">
+                    <label style="float:right; margin-right:5px">Party:</label>
+                </div>
+                <div style="float:left; width:70%">
+                    <input type="text" id="partyNameInput" />
+                </div>
+            </div>
+        </div>
+        <div style="display: flex; justify-content: center; align-items: center;">
+            <div style="width:200px; height:40px">
+                <div style="float:left; width:30%">
+                    <label style="float:right; margin-right:5px">Password:</label>
+                </div>
+                <div style="float:left; width:70%">
+                    <input type="text" id="partyPasswordInput" />
+                </div>
+            </div>
+        </div>
+        <div style="float:none;">
+            <div style="display: flex; justify-content: center; align-items: center;">
+                    <input style="display:flex; justify-content:center; align-items:center; left:50%" type="button" id="CreateSessionButton" value="Create session" />
+            </div>
+        </div>
+    </div>
+    <div style="float:left; width:30%">
+        <p></p>
     </div>
 </div>
-<div class="row p-1">
-
-    <div class="col-1">Password</div>
-    <div class="col-1">
-        <input type="text" id="partyPasswordInput" />
-    </div>
-</div>
-<div class="row p-1">
-    <div class="col-1">
-        <input type="button" id="CreateSessionButton" value="Connect" />
-    </div>
-</div>
-
 <script src="~/js/signalr/dist/browser/signalr.js"></script>
 <script src="~/js/sessionCreation.js"></script>

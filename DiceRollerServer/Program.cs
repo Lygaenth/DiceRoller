@@ -8,6 +8,7 @@ builder.Services.AddRazorPages();
 builder.Services.AddSignalR();
 builder.Services.AddSingleton<PartyService>();
 builder.Services.AddTransient<RollService>();
+builder.Services.AddTransient<MapService>();
 builder.Services.AddSingleton<RollHub>();
 
 var app = builder.Build();

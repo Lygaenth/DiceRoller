@@ -21,15 +21,15 @@ namespace DiceRollerServer.Pages
             string partyId = Request.Path.Value.Split('/')[2];
             string userId = Request.Path.Value.Split('/')[3];
 
+            ViewData["UserId"] = userId;
             ViewData["UserName"] = "GM";
             ViewData["PartyId"] = partyId;
-            ViewData["PartyName"] = _hub.GetPartyName(partyId);
+            ViewData["PartyName"] = _hub.GetPartyName(partyId).Result;
 
-            var userName = "";
-            if (userId.ToUpper() == "GM")
-                userName = "GM";
-            else
+            var userName = "GM";
+            if (userId.ToUpper() != "GM")
                 userName = _hub.GetUser(partyId, userId).Result;
+
             ViewData["UserName"] = userName;
         }
     }

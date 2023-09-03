@@ -8,11 +8,13 @@ namespace DiceRollerServer.Hubs
 	{
 		private readonly RollService _rollService;
 		private readonly PartyService _partyService;
+		private readonly MapService _mapService;
 
-		public RollHub(RollService rollService, PartyService partyService)
+		public RollHub(RollService rollService, PartyService partyService, MapService mapService)
 		{
 			_rollService = rollService;
 			_partyService = partyService;
+			_mapService = mapService;
 		}
 
 		public async Task SendMessage(string partyIdStr, string userIdStr, string message)
@@ -77,7 +79,7 @@ namespace DiceRollerServer.Hubs
 			{
 				var users = _partyService.GetUsers(partyId);
 				foreach (var user in users)
-					res += user.ID + ";" + user.Name + ";" + user.HP + "|";
+					res += user.ID + ";" + user.Name + ";" + user.HpMax +";"+ user.Hp +"|";
 				res = res.Substring(0, res.Length - 1);
 			}
 
@@ -120,5 +122,16 @@ namespace DiceRollerServer.Hubs
             }
             await Clients.Caller.SendAsync("FailedToJoinSession");
         }
+
+		public async Task MoveImage(string imageId, string X, string Y)
+		{
+			await Clients.Others.SendAsync("ImageMoved", imageId, X, Y);
+		}
+
+		public async Task LoadBackground(string background)
+		{
+			var map = _mapService.GetMap(background);
+			await Clients.All.SendAsync("UpdatedBackground", background, map.TileNumber);
+		}
 	}
 }

@@ -14,8 +14,10 @@ namespace DiceRollerServer.Services
         public Party CreateSession(string name, string password)
         {
             int id = 1;
+            var seedGenerator = new Random();
+            id = seedGenerator.Next(1000,9999);
             while(_parties.ContainsKey(id))
-                id++;
+                id = seedGenerator.Next(1000, 9999);
 
             var party = new Party(id, name);
             _parties[id] = party;
