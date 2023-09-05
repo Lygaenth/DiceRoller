@@ -1,0 +1,82 @@
+﻿@page "/party/{partyId}/{UserId}"
+
+<div class="" style="margin-left:10px; margin-right:10px;">
+    <div>
+        <div style="background:ghostwhite; height:30px; border:solid; border-width:thin; border-color:lightblue;">
+            <label style="font-weight:bold; margin-left:5px">Party:</label>
+        </div>
+        <div style="margin-left:20px">
+            <div>
+                <label style="font-weight:bold; margin-left:5px">Name:</label>
+                <label>@ViewData["PartyName"]</label>
+            </div>
+            <div>
+                <label style="font-weight:bold; margin-left:5px">Code:</label>
+                <label>@ViewData["PartyId"]</label>
+            </div>
+        </div>
+    </div>
+    <div>
+        <div style="float:left; width:20%; height:30px; background:ghostwhite; border:solid; border-width:thin; border-color:lightblue; ">
+            <div>
+                <label style ="font-weight:bold; margin-left:5px">Users</label>
+            </div>
+            <div id="usersListId" style="padding:5px"></div>
+        </div>
+        <div style="float:left; width:60%; height:30px; background:ghostwhite; border:solid; border-width:thin; border-color:lightblue;">
+            <div>
+                <label style="font-weight:bold; margin-left:5px">Map</label>
+            </div>
+            <div>
+                <select id="backgroundListId">
+                    <option value="./../../Media/Maps/Slime_cave.png" >Slime cave</option>
+                    <option value="./../../Media/Maps/Slime_cave_2.png" >Slime_cave_2</option>
+                </select>
+            </div>
+
+            <div style="margin:15px; position:relative;left:0; ">
+                <img id="background_id" src="./../../Media/Maps/Slime_cave.png" style="position:absolute; left:0; top:0; max-width:100%" />
+                <img id="charac_1_id" src="./../../Media/Portraits/Kirae.png" style="position:absolute; left:0px; top:0px;max-width:5%" draggable="true" />
+            </div>
+        </div>
+        <div onload="javascript:JoinSession()" style="float:right; width:20%; background:ghostwhite;">
+            <div style="background:ghostwhite; border:solid; height:30px; border-width:thin; border-color:lightblue;">
+                <label id="userName" style="font-weight:bold; margin-left:5px">@ViewData["UserName"]</label>
+                <label id="userId" style="visibility:hidden;">@ViewData["UserId"]</label>
+            </div>
+            <div style="margin-left:10px">
+                <div style="float:left; width:16%">
+                    <input type="image" id="rollDie4" value="D4" src="./../../Media/D4.png" Width="40" />
+                </div>
+                <div style="float:left; width:16%">
+                    <input type="image" id="rollDie6" value="D6" src="./../../Media/D6.png" Width="40" />
+                </div>
+                <div style="float:left; width:16%">
+                    <input type="image" id="rollDie8" value="D8" src="./../../Media/D8.png" Width="40" />
+                </div>
+                <div style="float:left; width:16%">
+                    <input type="image" id="rollDie10" value="D10" src="./../../Media/D10.png" Width="40" />
+                </div>
+                <div style="float:left; width:16%">
+                    <input type="image" id="rollDie12" value="D12" src="./../../Media/D12.png" Width="40" />
+                </div>
+                <div style="float:left; width:16%">
+                    <input type="image" id="rollDie20" value="D20" src="./../../Media/D20.png" Width="40" />
+                </div>
+            </div>
+            <div style="margin-left:10px">
+                <textarea class="scrollabletextbox" id="messagesList" cols="30" rows="10" disabled wrap="soft"></textarea>
+            </div>
+            <div style="margin:5px">
+                <a>Message</a>
+                <input type="text" class="w-200" id="messageInput" />
+                <input type="button" id="sendButton" value="Send" />
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/js/signalr/dist/browser/signalr.js"></script>
+<script src="~/js/roll.js"></script>
+<script src="~/js/MapManagement.ts"></script>
+
+@model DiceRollerServerTs.Pages.PartyPageModel
