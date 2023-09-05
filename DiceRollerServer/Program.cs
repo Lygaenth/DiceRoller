@@ -6,6 +6,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddSignalR();
+
 builder.Services.AddSingleton<PartyService>();
 builder.Services.AddTransient<RollService>();
 builder.Services.AddTransient<MapService>();

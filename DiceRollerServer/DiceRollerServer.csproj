@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\DiceRoller.Core\DiceRoller.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Update="wwwroot\js\roll.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
