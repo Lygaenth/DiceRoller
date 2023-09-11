@@ -1,4 +1,4 @@
-﻿@page "/party/{partyId}/{UserId}"
+﻿@page "/party/{partyId}/{userId}"
 
 <div class="" style="margin-left:10px; margin-right:10px;">
     <div>
@@ -27,16 +27,19 @@
             <div>
                 <label style="font-weight:bold; margin-left:5px">Map</label>
             </div>
-            <div>
-                <select id="backgroundListId">
+            @if(RouteData.Values["userId"].ToString() == "gm")
+            {
+                <div>
+                    <select id="backgroundListId">
                     <option value="./../../Media/Maps/Slime_cave.png" >Slime cave</option>
                     <option value="./../../Media/Maps/Slime_cave_2.png" >Slime_cave_2</option>
+                    <option value="./../../Media/Maps/Inn.png" >Inn</option>
                 </select>
             </div>
+            }
 
-            <div style="margin:15px; position:relative;left:0; ">
+            <div id="mapViewId" style="margin:15px; position:relative;left:0; ">
                 <img id="background_id" src="./../../Media/Maps/Slime_cave.png" style="position:absolute; left:0; top:0; max-width:100%" />
-                <img id="charac_1_id" src="./../../Media/Portraits/Kirae.png" style="position:absolute; left:0px; top:0px;max-width:5%" draggable="true" />
             </div>
         </div>
         <div onload="javascript:JoinSession()" style="float:right; width:20%; background:ghostwhite;">
@@ -76,6 +79,6 @@
     </div>
 </div>
 <script src="~/js/signalr/dist/browser/signalr.js"></script>
-<script src="~/js/roll.js"></script>
+<script type="module" src="~/js/roll.js"></script>
 
 @model DiceRollerServer.Pages.PartyPageModel

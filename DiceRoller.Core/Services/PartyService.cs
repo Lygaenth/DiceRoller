@@ -1,4 +1,5 @@
 ﻿using DiceRollerServer.Models;
+using System.Drawing;
 
 namespace DiceRollerServer.Services
 {
@@ -61,6 +62,19 @@ namespace DiceRollerServer.Services
             return _parties[partyId].Members;
         }
     
+        public bool MoveUser(int partyId, int userId, Point position)
+        {
+            // check position is in map
+            if (position.X <= 0 || position.Y <= 0)
+                return false;
 
+            _parties[partyId].Members.First(m => m.ID == userId).Move(position.X, position.Y);
+            return true;
+        }
+
+        public Point GetUserPosition(int partyId, int userId)
+        {
+            return _parties[partyId].Members[userId].Position;
+        }
     }
 }

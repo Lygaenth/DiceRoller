@@ -79,7 +79,7 @@ namespace DiceRollerServer.Hubs
 			{
 				var users = _partyService.GetUsers(partyId);
 				foreach (var user in users)
-					res += user.ID + ";" + user.Name + ";" + user.HpMax +";"+ user.Hp +"|";
+					res += user.ID + ";" + user.Name + ";" + user.HpMax + ";" + user.Hp+";"+user.ImageUrl+";"+user.Position.X+";"+user.Position.Y+"|";
 				res = res.Substring(0, res.Length - 1);
 			}
 
@@ -123,9 +123,27 @@ namespace DiceRollerServer.Hubs
             await Clients.Caller.SendAsync("FailedToJoinSession");
         }
 
-		public async Task MoveImage(string imageId, string X, string Y)
+		public async Task MoveImage(string partyIdStr, string imageIdStr, string X, string Y)
 		{
-			await Clients.Others.SendAsync("ImageMoved", imageId, X, Y);
+			if (!Int32.TryParse(partyIdStr, out var partyId))
+				return;
+
+            if (!Int32.TryParse(imageIdStr, out var userId))
+                return;
+
+            if (!Int32.TryParse(X, out var x))
+                return;
+
+            if (!Int32.TryParse(Y, out var y))
+                return;
+
+			if (_partyService.MoveUser(partyId, userId, new System.Drawing.Point(x, y)))
+				await Clients.Others.SendAsync("ImageMoved", userId, X, Y);
+			else
+			{
+				var position = _partyService.GetUserPosition(partyId, userId);
+				await Clients.Caller.SendAsync("ImageMoved", userId, position.X, position.Y);
+			}
 		}
 
 		public async Task LoadBackground(string background)

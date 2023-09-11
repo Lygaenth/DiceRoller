@@ -9,12 +9,18 @@ namespace DiceRollerServer.Services
         {
             _maps = new Dictionary<string, Map>();
             _maps.Add("./../../Media/Maps/Slime_cave.png", new Map(1, "./../../Media/Maps/Slime_cave.png", "Slime cave", 16));
-            _maps.Add("./../../Media/Maps/Slime_cave_2.png", new Map(2, "./../../Media/Maps/Slime_cave_2.png", "Slime cave 2", 8));
+            _maps.Add("./../../Media/Maps/Slime_cave_2.png", new Map(2, "./../../Media/Maps/Slime_cave_2.png", "Slime cave 2", 16));
+            _maps.Add("./../../Media/Maps/Inn.png", new Map(2, "./../../Media/Maps/Inn.png", "Inn", 13));
         }
 
         public Map GetMap(string id)
         {
             return _maps[id];
+        }
+
+        public List<Map> GetMapList()
+        {
+            return _maps.Values.ToList();
         }
     }
 }
