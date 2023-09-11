@@ -1,9 +1,10 @@
-﻿using DiceRollerServer.Models;
+﻿using DiceRoller.Core.Apis;
+using DiceRollerServer.Models;
 using System.Drawing;
 
 namespace DiceRollerServer.Services
 {
-    public class PartyService
+    public class PartyService : IPartyService
     {
         private readonly Dictionary<int, Party> _parties;
 
@@ -16,8 +17,8 @@ namespace DiceRollerServer.Services
         {
             int id = 1;
             var seedGenerator = new Random();
-            id = seedGenerator.Next(1000,9999);
-            while(_parties.ContainsKey(id))
+            id = seedGenerator.Next(1000, 9999);
+            while (_parties.ContainsKey(id))
                 id = seedGenerator.Next(1000, 9999);
 
             var party = new Party(id, name);
@@ -49,7 +50,7 @@ namespace DiceRollerServer.Services
                 return -1;
         }
 
-        public string GetUser(int partyId, int userId)
+        public string GetUserName(int partyId, int userId)
         {
             if (userId == 0)
                 return "GM";
@@ -61,7 +62,7 @@ namespace DiceRollerServer.Services
         {
             return _parties[partyId].Members;
         }
-    
+
         public bool MoveUser(int partyId, int userId, Point position)
         {
             // check position is in map

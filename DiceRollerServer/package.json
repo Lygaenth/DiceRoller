@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "@microsoft/signalr": "^7.0.10",
+    "@types/node": "^20.5.9"
+  }
+}

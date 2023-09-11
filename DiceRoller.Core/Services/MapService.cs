@@ -1,26 +1,44 @@
-﻿using DiceRollerServer.Models;
+﻿using DiceRoller.Core.Apis;
+using DiceRoller.Core.Exceptions;
+using DiceRoller.Core.Models;
+using DiceRollerServer.Models;
 
 namespace DiceRollerServer.Services
 {
-    public class MapService
+    public class MapService : IMapService
     {
-        private readonly Dictionary<string, Map> _maps;
+        private readonly List<MapPack> _mapsPack;
         public MapService()
         {
-            _maps = new Dictionary<string, Map>();
-            _maps.Add("./../../Media/Maps/Slime_cave.png", new Map(1, "./../../Media/Maps/Slime_cave.png", "Slime cave", 16));
-            _maps.Add("./../../Media/Maps/Slime_cave_2.png", new Map(2, "./../../Media/Maps/Slime_cave_2.png", "Slime cave 2", 16));
-            _maps.Add("./../../Media/Maps/Inn.png", new Map(2, "./../../Media/Maps/Inn.png", "Inn", 13));
+            _mapsPack = new List<MapPack>();
         }
 
-        public Map GetMap(string id)
+        public void LoadPartyMaps(int partyId)
         {
-            return _maps[id];
+            var pack = new MapPack(partyId);
+            pack.AddMap(new Map(1, "./../../Media/Maps/Slime_cave.png", "Slime cave", 16));
+            pack.AddMap(new Map(2, "./../../Media/Maps/Slime_cave_2.png", "Slime cave 2", 16));
+            pack.AddMap(new Map(3, "./../../Media/Maps/Inn.png", "Inn", 13));
+            _mapsPack.Add(pack);
         }
 
-        public List<Map> GetMapList()
+        public Map GetMap(int partyId, int id)
         {
-            return _maps.Values.ToList();
+            if (!_mapsPack.Any(m => m.ID == partyId))
+                throw new UnknownIdException("MapPack", partyId);
+
+            if (!_mapsPack.First(m => m.ID == partyId).Maps.Any(m => m.Id == id))
+                throw new UnknownIdException("Map", id);
+
+            return _mapsPack.First(m => m.ID == partyId).Maps.First(m=> m.Id == id);
+        }
+
+        public List<Map> GetMapList(int partyId)
+        {
+            if (!_mapsPack.Any(m => m.ID == partyId))
+                throw new UnknownIdException("MapPack", partyId);
+
+            return _mapsPack.First(p => p.ID == partyId).Maps.ToList();
         }
     }
 }

@@ -1,16 +1,16 @@
-﻿using DiceRollerServer.Services;
+﻿using DiceRoller.Core.Apis;
 using Microsoft.AspNetCore.SignalR;
 using System.Xml.Linq;
 
 namespace DiceRollerServer.Hubs
 {
-	public class RollHub : Hub
+    public class RollHub : Hub
 	{
-		private readonly RollService _rollService;
-		private readonly PartyService _partyService;
-		private readonly MapService _mapService;
+		private readonly IRollService _rollService;
+		private readonly IPartyService _partyService;
+		private readonly IMapService _mapService;
 
-		public RollHub(RollService rollService, PartyService partyService, MapService mapService)
+		public RollHub(IRollService rollService, IPartyService partyService, IMapService mapService)
 		{
 			_rollService = rollService;
 			_partyService = partyService;
@@ -23,7 +23,7 @@ namespace DiceRollerServer.Hubs
 				return;
 			if (!Int32.TryParse(userIdStr, out int userId) && userIdStr.ToUpper() != "GM")
 				return;
-            await Clients.All.SendAsync("ReceiveMessage", _partyService.GetUser(partyId, userId), message);
+            await Clients.All.SendAsync("ReceiveMessage", _partyService.GetUserName(partyId, userId), message);
             //await Clients.Group(partyIdStr).SendAsync("ReceiveMessage", _partyService.GetUser(partyId, userId), message);
 		}
 
@@ -34,8 +34,8 @@ namespace DiceRollerServer.Hubs
             if (!Int32.TryParse(userIdStr, out int userId) && userIdStr.ToUpper() != "GM")
                 return;
 
-            int result = _rollService.RollDie(die);
-            await Clients.All.SendAsync("ReceiveRollResult", _partyService.GetUser(partyId, userId), result, die);
+            int result = _rollService.RollDie(userId, die);
+            await Clients.All.SendAsync("ReceiveRollResult", _partyService.GetUserName(partyId, userId), result, die);
             //await Clients.Group(partyIdStr).SendAsync("ReceiveRollResult", _partyService.GetUser(partyId, userId), result, die);
 		}
 
@@ -44,6 +44,7 @@ namespace DiceRollerServer.Hubs
 			try
 			{
 				var party = _partyService.CreateSession(name, password);
+				_mapService.LoadPartyMaps(party.ID);
 				await Groups.AddToGroupAsync(Context.ConnectionId, "Party_"+party.ID);
 				await Clients.Caller.SendAsync("SessionCreated", party.ID);
 				Context.User.AddIdentity(new System.Security.Claims.ClaimsIdentity("RollHubId", party.ID + "_GM", "GM"));
@@ -68,7 +69,7 @@ namespace DiceRollerServer.Hubs
             if (!Int32.TryParse(userIdStr, out int userId) && userIdStr.ToUpper() != "GM")
                 return "";
 
-			return _partyService.GetUser(partyId, userId);
+			return _partyService.GetUserName(partyId, userId);
 		}
 
 		private string GetUsers(string partyIdStr)
@@ -110,7 +111,7 @@ namespace DiceRollerServer.Hubs
 				if (userIdStr.ToUpper() != "GM" && !Int32.TryParse(userIdStr, out userId))
 					return;
 
-                string name = _partyService.GetUser(partyId, userId);
+                string name = _partyService.GetUserName(partyId, userId);
 				await Groups.AddToGroupAsync(Context.ConnectionId, partyIdStr);
 				if (userId >= 1)
 				{
@@ -146,10 +147,16 @@ namespace DiceRollerServer.Hubs
 			}
 		}
 
-		public async Task LoadBackground(string background)
+		public async Task LoadBackground(string partyIdStr, string mapIdStr)
 		{
-			var map = _mapService.GetMap(background);
-			await Clients.All.SendAsync("UpdatedBackground", background, map.TileNumber);
+            if (!Int32.TryParse(partyIdStr, out var partyId))
+                return;
+
+            if (!Int32.TryParse(mapIdStr, out var mapId))
+                return;
+
+            var map = _mapService.GetMap(partyId, mapId);
+			await Clients.All.SendAsync("UpdatedBackground", map.Url, map.TileNumber);
 		}
 	}
 }

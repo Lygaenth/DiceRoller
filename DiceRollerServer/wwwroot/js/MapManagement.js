@@ -18,7 +18,7 @@ export function Initialize(connection) {
         backgroundList.addEventListener("click", function () {
             if (backgroundList.value != currentBackground) {
                 currentBackground = backgroundList.value;
-                mapConnection.invoke("LoadBackground", currentBackground);
+                mapConnection.invoke("LoadBackground", partyId, currentBackground);
             }
         });
     }
