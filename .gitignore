@@ -7,3 +7,5 @@ TestJeux/sortie/*
 /DiceRollerServer/wwwroot/media/Maps/Slime_cave.png
 /DiceRollerServer/wwwroot/media/Maps/Slime_cave_2.png
 /DiceRollerServer/wwwroot/media/Portraits/Kirae.png
+*/node_modules/*
+*/test/wwwroot/*
