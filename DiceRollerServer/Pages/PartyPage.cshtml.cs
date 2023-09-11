@@ -1,6 +1,7 @@
 using DiceRollerServer.Hubs;
 using DiceRollerServer.Models;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace DiceRollerServer.Pages
 {
@@ -8,9 +9,12 @@ namespace DiceRollerServer.Pages
     {
         private readonly RollHub _hub;
 
+        public List<SelectListItem> Maps { get; set; }
+
         public PartyPageModel(RollHub hub)
         {
             _hub = hub;
+            Maps = new List<SelectListItem>();
         }
 
         public void OnGet(string parameters)
@@ -24,11 +28,21 @@ namespace DiceRollerServer.Pages
             ViewData["UserId"] = userId;
             ViewData["UserName"] = "GM";
             ViewData["PartyId"] = partyId;
-            ViewData["PartyName"] = _hub.GetPartyName(partyId).Result;
+            ViewData["PartyName"] = _hub.GetPartyName(partyId);
 
             var userName = "GM";
-            if (userId.ToUpper() != "GM")
-                userName = _hub.GetUser(partyId, userId).Result;
+            if (int.TryParse(userId, out _))
+                userName = _hub.GetUser(partyId, userId);
+
+            var mapList = _hub.GetMaps(Convert.ToInt32(partyId));
+            var maps = mapList.Split('|');
+            Maps.Clear();
+
+            foreach(var map in maps)
+            {
+                var values = map.Split(";");
+                Maps.Add(new SelectListItem { Value = values[0], Text = values[1] });
+            }
 
             ViewData["UserName"] = userName;
         }

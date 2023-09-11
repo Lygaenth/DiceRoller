@@ -9,6 +9,9 @@ namespace DiceRollerServer.Services
         private readonly Dictionary<int, RollsStats> _users;
         private readonly Random _random;
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
         public RollService()
         {
             _users = new Dictionary<int, RollsStats>();

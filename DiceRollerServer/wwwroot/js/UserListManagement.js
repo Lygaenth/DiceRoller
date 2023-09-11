@@ -1,13 +1,15 @@
 ﻿"use strict";
 
 var userListConnection;
-var usersNode
+var usersNode;
+
+var partyId = location.pathname.split('/')[2];
 
 export function Initialize(connection)
 {
     userListConnection = connection;
     usersNode = document.getElementById("usersListId");
-    connection.on("UsersUpdated", function (users) {
+    userListConnection.on("UsersUpdated", function (users) {
         UpdateUsersList(users);
     });
 }
@@ -62,6 +64,7 @@ function CreateUserRow(node, id, name, currentHp, hpMax, url, editable) {
         input.id = "hpInput";
         input.size = 3;
         input.value = currentHp;
+        input.oninput = function () { UpdateHp(input.value) }; 
         divHp.appendChild(input);
     }
     else {
@@ -74,4 +77,10 @@ function CreateUserRow(node, id, name, currentHp, hpMax, url, editable) {
 
     divHp.appendChild(labelHp);
     userDiv.appendChild(divHp);
+}
+
+function UpdateHp(value) {
+
+    var user = location.pathname.split('/')[3];
+    userListConnection.invoke("UpdateHp",partyId, user, value);
 }

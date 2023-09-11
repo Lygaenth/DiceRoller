@@ -20,7 +20,10 @@ connection.start().then(function () {
 function JoinSession() {
     var partyId = location.pathname.split('/')[2];
     var userId = location.pathname.split('/')[3];
-    connection.invoke("JoinPlayer", partyId, userId);
+    if (userId == 'gm')
+        connection.invoke("JoinGm", partyId);
+    else
+        connection.invoke("JoinPlayer", partyId, userId);
 }
 
 

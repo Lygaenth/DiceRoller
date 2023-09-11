@@ -1,4 +1,5 @@
-﻿using DiceRollerServer.Models;
+﻿using DiceRoller.Core.Models;
+using DiceRollerServer.Models;
 using System.Drawing;
 
 namespace DiceRoller.Core.Apis
@@ -55,6 +56,15 @@ namespace DiceRoller.Core.Apis
         /// <param name="position"></param>
         /// <returns></returns>
         bool MoveUser(int partyId, int userId, Point position);
+
+        /// <summary>
+        /// Update user's character HP
+        /// </summary>
+        /// <param name="partyId"></param>
+        /// <param name="userId"></param>
+        /// <param name="hp"></param>
+        /// <returns></returns>
+        bool UpdateHp(int partyId, int userId, int hp);
 
         /// <summary>
         /// Get user position in party

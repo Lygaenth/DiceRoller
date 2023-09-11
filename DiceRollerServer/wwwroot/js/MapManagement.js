@@ -131,7 +131,7 @@ function DragElement(elmnt) {
         // stop moving when mouse button is released:
         document.onmouseup = null;
         document.onmousemove = null;
-        mapConnection.invoke("MoveImage", partyId, GetCharacterId(movedElement.id), movedElement.style.left.substring(0, movedElement.style.left.length - 2), movedElement.style.top.substring(0, movedElement.style.top.length - 2));
+        mapConnection.invoke("MoveToken", partyId, GetCharacterId(movedElement.id), movedElement.style.left.substring(0, movedElement.style.left.length - 2), movedElement.style.top.substring(0, movedElement.style.top.length - 2));
     };
 
     function GetCharacterId(id) {

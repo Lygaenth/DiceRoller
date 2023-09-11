@@ -27,17 +27,12 @@
             <div>
                 <label style="font-weight:bold; margin-left:5px">Map</label>
             </div>
-            @if(RouteData.Values["userId"].ToString() == "gm")
+            @if(RouteData.Values["userId"]?.ToString() == "gm")
             {
-                <div>
-                    <select id="backgroundListId">
-                    <option value="1">Slime cave</option>
-                    <option value="2">Slime_cave_2</option>
-                    <option value="3">Inn</option>
-                </select>
-            </div>
+                <div style="margin-top:10px"> 
+                    <select id="backgroundListId" asp-items="@Model.Maps"></select>
+                </div>
             }
-
             <div id="mapViewId" style="margin:15px; position:relative;left:0; ">
                 <img id="background_id" src="./../../Media/Maps/Slime_cave.png" style="position:absolute; left:0; top:0; max-width:100%" />
             </div>

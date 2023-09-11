@@ -16,7 +16,7 @@ namespace DiceRoller.Core.TEst
         void TestRollDie(int die)
         {
             IRollService rollService = new RollService();
-            Assert.True(rollService.RollDie(1, die) < die);
+            Assert.True(rollService.RollDie(1, die) <= die);
         }
 
         [Fact]

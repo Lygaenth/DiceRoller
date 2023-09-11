@@ -1,18 +1,18 @@
-﻿using DiceRollerServer.Services;
+﻿using DiceRoller.Core.Models;
+using DiceRoller.Core.Models.Base;
 
 namespace DiceRollerServer.Models
 {
-    public class Party : IDisposable
+    public class Party : Element
     {
-        public int ID { get; set; }
         public string Name { get; set; }
         public GameMaster? Gm { get; set; }
-        public List<PartyMember> Members { get; }
+        public ElementList<PartyMember> Members { get; }
 
         public Party(int id, string name)
+            : base(id)
         {
-            ID = id;
-            Members = new List<PartyMember>();
+            Members = new ElementList<PartyMember>();
             Name = name;
         }
 
@@ -39,11 +39,6 @@ namespace DiceRollerServer.Models
             while (Members.Any(m => m.ID == id))
                 id++;
             return id;
-        }
-
-        public void Dispose()
-        {
-
         }
     }
 }
