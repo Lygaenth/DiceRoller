@@ -23,8 +23,7 @@ namespace DiceRollerServer.Hubs
 				return;
 			if (!Int32.TryParse(userIdStr, out int userId) && userIdStr.ToUpper() != "GM")
 				return;
-            await Clients.All.SendAsync("ReceiveMessage", _partyService.GetUserName(partyId, userId), message);
-            //await Clients.Group(partyIdStr).SendAsync("ReceiveMessage", _partyService.GetUser(partyId, userId), message);
+            await Clients.Group(partyIdStr).SendAsync("ReceiveMessage", _partyService.GetUserName(partyId, userId), message);
 		}
 
 		public async Task RollDie(string partyIdStr, string userIdStr, int die)
@@ -35,8 +34,7 @@ namespace DiceRollerServer.Hubs
                 return;
 
             int result = _rollService.RollDie(userId, die);
-            await Clients.All.SendAsync("ReceiveRollResult", _partyService.GetUserName(partyId, userId), result, die);
-            //await Clients.Group(partyIdStr).SendAsync("ReceiveRollResult", _partyService.GetUser(partyId, userId), result, die);
+            await Clients.Group(partyIdStr).SendAsync("ReceiveRollResult", _partyService.GetUserName(partyId, userId), result, die);
 		}
 
 		public async Task CreateSession(string name, string password)
@@ -116,8 +114,8 @@ namespace DiceRollerServer.Hubs
 				if (userId >= 1)
 				{
 					await Clients.Caller.SendAsync("JoinSessionAsPlayer", partyId, userId, name);
-					await Clients.Others.SendAsync("JoinedUser", partyId, name);
-                    await Clients.All.SendAsync("UsersUpdated", GetUsers(partyIdStr));
+                    await Clients.OthersInGroup(partyId.ToString()).SendAsync("JoinedUser", partyId, name);
+                    await Clients.Groups(partyId.ToString()).SendAsync("UsersUpdated", GetUsers(partyIdStr));
                     return;
 				}
             }
@@ -139,7 +137,7 @@ namespace DiceRollerServer.Hubs
                 return;
 
 			if (_partyService.MoveUser(partyId, userId, new System.Drawing.Point(x, y)))
-				await Clients.Others.SendAsync("ImageMoved", userId, X, Y);
+				await Clients.OthersInGroup(partyId.ToString()).SendAsync("ImageMoved", userId, X, Y);
 			else
 			{
 				var position = _partyService.GetUserPosition(partyId, userId);
@@ -156,7 +154,7 @@ namespace DiceRollerServer.Hubs
                 return;
 
             var map = _mapService.GetMap(partyId, mapId);
-			await Clients.All.SendAsync("UpdatedBackground", map.Url, map.TileNumber);
+			await Clients.Group(partyId.ToString()).SendAsync("UpdatedBackground", map.Url, map.TileNumber);
 		}
 	}
 }
